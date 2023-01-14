@@ -1,6 +1,68 @@
-<script setup></script>
+<script setup>
+const route = useRoute();
+
+// 1
+// const res = await $fetch("http://www.omdbapi.com/", {
+//   params: {
+//     apikey: "24a88edc",
+//     i: route.params.id,
+//   },
+// });
+
+// 2
+// const { data } = useAsyncData(
+//   () => {
+//     return $fetch("http://www.omdbapi.com/", {
+//       params: {
+//         apikey: "24a88edc",
+//         i: route.params.id,
+//       },
+//     });
+//   },
+//   {
+//     server: true,
+//     default: () => {
+//       console.log("default");
+//       return "lazying";
+//     },
+//     pick: ["Plot", "Title"],
+//   }
+// );
+
+// 3
+const { data, error } = await useFetch("http://www.omdbapi.com/", {
+  params: {
+    apikey: "24a88edc",
+    i: route.params.id,
+  },
+  pick: ["Plot", "Title", "Poster", "Error"],
+  key: `/movies/${route.params.id}`,
+});
+
+if (error.value) {
+  console.log("error.value :>> ", error.value);
+}
+
+if (data.value.Error) {
+  showError({ statusCode: 404, statusMessage: "Page Not Found" });
+}
+// -------
+
+// SEO useHead
+useHead({
+  title: data.value.Title,
+  meta: [
+    { name: "description", content: data.value.Plot },
+    { property: "og:description", content: data.value.Plot },
+    { property: "og:image", content: data.value.Poster },
+    { name: "twitter:card", content: "summary_large_image" },
+  ],
+});
+</script>
 
 <template>
+  <pre>{{ data }}</pre>
+
   <div>
     <h1>{{ $route.params.id }}</h1>
   </div>

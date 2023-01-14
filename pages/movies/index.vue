@@ -1,20 +1,7 @@
-<script lang="ts" setup>
-const query = ref("");
-const search = () => {
-  $fetch("http://www.omdbapi.com/", {
-    query: {
-      apikey: "24a88edc",
-      s: query.value,
-    },
-  });
-};
-</script>
-
 <template>
-  <form @submit.prevent="search()">
-    <input type="text" name="searchText" v-model="query" />
-    <button>Search</button>
-  </form>
+  <MovieSearch />
 </template>
 
-<style scoped></style>
+<script setup></script>
+
+<style lang="scss" scoped></style>

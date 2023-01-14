@@ -1,3 +1,11 @@
+<script setup>
+useHead({
+  titleTemplate: (titleChunk) => {
+    return titleChunk ? `${titleChunk} - My movie site` : "My movie site";
+  },
+});
+</script>
+
 <template>
   <nav>
     <NuxtLink to="/">Home</NuxtLink>
