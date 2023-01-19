@@ -30,7 +30,7 @@ const route = useRoute();
 // );
 
 // 3
-const { data, error } = await useFetch("http://www.omdbapi.com/", {
+const { data, error } = await useFetch("https://www.omdbapi.com/", {
   params: {
     apikey: "24a88edc",
     i: route.params.id,
